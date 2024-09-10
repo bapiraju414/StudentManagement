@@ -40,5 +40,43 @@ namespace StudentManagement.Controllers
             this.studentDBContext.SaveChanges();
             return Ok(studentsdetails);
         }
+
+
+        [HttpPut(Name = "UpdateStudentDetails")]       
+        public IActionResult Put(Int64 id, StudentDto request)
+        {
+
+            var student = studentDBContext.StudentMaster.Find(id);
+
+            if (student == null)
+            {
+                return NotFound();
+            }
+
+            student.FirstName = request.FirstName;
+            student.LastName = request.LastName;
+            student.Emailid = request.Emailid;
+            student.DateofBirth = request.DateofBirth;          
+                        
+            this.studentDBContext.SaveChanges();
+            return Ok(student);
+        }
+
+        [HttpDelete(Name = "DeleteStudentDetails")]
+        public IActionResult Delete(Int64 id)
+        {
+
+            var teacher = studentDBContext.StudentMaster.Find(id);
+
+            if (teacher == null)
+            {
+                return NotFound();
+            }
+            this.studentDBContext.Remove(id);
+            this.studentDBContext.SaveChanges();
+            return Ok(teacher);
+        }
+
+
     }
 }
